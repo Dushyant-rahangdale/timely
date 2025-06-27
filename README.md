@@ -111,6 +111,32 @@ The aspnetapp.pfx certificate is mounted into the container and referenced from 
 
 ---
 
+## 🔍 HTTPS Configuration in appsettings.json
+
+The Kestrel web server is configured to use HTTPS via the following block in `src/appsettings.json`:
+
+```json
+"Kestrel": {
+  "Endpoints": {
+    "Https": {
+      "Url": "https://0.0.0.0:8443",
+      "Certificate": {
+        "Path": "/app/https/aspnetapp.pfx",
+        "Password": "password"
+      }
+    }
+  }
+}
+```
+
+This configuration:
+	•	Binds HTTPS traffic to port 8443 inside the Docker container
+	•	Uses a self-signed .pfx certificate mounted at /app/https/aspnetapp.pfx
+	•	Matches the docker run volume mount and Kestrel binding in Program.cs
+
+
+---
+
 ## 🧪 Unit Tests
 
 Tests are defined using NUnit in the `/test` folder.
