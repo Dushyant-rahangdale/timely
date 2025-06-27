@@ -92,20 +92,22 @@ docker build -t timely:latest ./src
 ### Run container manually:
 
 ```bash
-docker run -d -p 8080:80 --name timely-container timely:latest
+docker run -d -p 8081:8443 -v $(pwd)/src/https:/app/https --name timely-container timely:latest
 ```
 
 ---
 
 ## 🔍 Program.cs Modification
 
-In `Program.cs`, this line was added to ensure the API listens on Docker's internal port:
+In `Program.cs`,  Kestrel is explicitly bound to HTTPS using:
 
 ```csharp
-webBuilder.UseUrls("http://0.0.0.0:80");
+webBuilder.UseUrls("https://0.0.0.0:8443");
 ```
 
-This allows the container to accept external traffic properly through port mapping (`-p 8080:80`).
+This ensures the app listens on port 8443 inside the container, matching the Docker -p mapping.
+
+The aspnetapp.pfx certificate is mounted into the container and referenced from /app/https.
 
 ---
 
