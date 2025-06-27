@@ -81,21 +81,6 @@ You’ll get a UTC timestamp like:
 Here’s what the running app looks like when deployed via PowerShell:
 
 ![Timely API Output](./screenshot.png)
-## 🐳 Docker
-
-### Build image manually:
-
-```bash
-docker build -t timely:latest ./src
-```
-
-### Run container manually:
-
-```bash
-docker run -d -p 8081:8443 -v $(pwd)/src/https:/app/https --name timely-container timely:latest
-```
-
----
 
 ## 🔍 Program.cs Modification
 
